@@ -13,9 +13,13 @@ class INI
 {
 public:
     INI();
+    ~INI();
 public:
-    void ReadINI();
-    void WriteINI();
+    int ReadINI();
+    int WriteINI(string);
+    void ClearINI();
+    void ShowINI();
+    keys* GetINI();
 private:
     keys * key;
 };

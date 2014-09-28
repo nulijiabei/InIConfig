@@ -8,7 +8,7 @@ int main()
     cout << "Hello World!" << endl;
     INI * ini = new INI();
     ini->ReadINI();
-    ini->WriteINI();
+    ini->ShowINI();
     return 0;
 }
 

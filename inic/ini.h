@@ -19,11 +19,9 @@ public:
     int WriteINI();
     void ClearINI();
     void ShowINI();
-    keys* GetINI();
-    string GetValByKeys(string, string);
-    values* GetValsByKeys(string);
-    int DelValByKeys(string, string);
-    int DelValsByKeys(string);
+    void AppendValByKeysAndVals(string, string, string);
+    int DelValByKeysAndVals(string, string);
+    string GetValByKeysAndVals(string, string);
 private:
     keys * key;
     string path;

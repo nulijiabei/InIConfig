@@ -18,6 +18,7 @@ INI::~INI()
 
 int INI::ReadINI()
 {
+    ClearINI();
     string line;
     string type;
     int i;
@@ -43,7 +44,7 @@ int INI::ReadINI()
         {
             continue;
         }
-        if((*key)[type] == NULL)
+        if(key->find(type) == key->end())
         {
             values * val = new values();
             (*key)[type] = val;
@@ -60,6 +61,7 @@ void INI::ClearINI()
     keys::iterator it;
     for(it=(*key).begin(); it!=(*key).end(); it++)
     {
+        (*(*it).second).clear();
         delete((*it).second);
         (*key).erase((*it).first);
     }
@@ -71,56 +73,58 @@ void INI::ShowINI()
     for(it=(*key).begin(); it!=(*key).end(); it++)
     {
         cout << "[" << (*it).first << "]" << endl;
-        values * val = (*it).second;
+        values * vals = (*it).second;
         values::iterator iv;
-        for(iv=(*val).begin(); iv!=(*val).end(); iv++)
+        for(iv=(*vals).begin(); iv!=(*vals).end(); iv++)
         {
             cout << (*iv).first << "=" << (*iv).second << endl;
         }
     }
 }
 
-keys* INI::GetINI()
+string INI::GetValByKeysAndVals(string _keys, string _values)
 {
-    return key;
-}
-
-values* INI::GetValsByKeys(string _keys)
-{
-    return (*key)[_keys];
-}
-
-string INI::GetValByKeys(string _keys, string _values)
-{
-    values * vals = (*key)[_keys];
-    if(vals != NULL)
+    if (key->find(_keys) == key->end())
     {
-        return  (*vals)[_values];
+        return "";
     }
-    return "";
+    values * vals = (*key)[_keys];
+    if (vals->find(_values) == vals->end())
+    {
+        return "";
+    }
+    return (*vals)[_values];
 }
 
-int INI::DelValByKeys(string _keys, string _values)
+int INI::DelValByKeysAndVals(string _keys, string _values)
 {
+    if (key->find(_keys) == key->end())
+    {
+        return -1;
+    }
     values * vals = (*key)[_keys];
-    if(vals == NULL)
+    if (vals->find(_values) == vals->end())
     {
         return -1;
     }
     (*vals).erase(_values);
+    if ((*vals).size() == 0)
+    {
+        delete(vals);
+        (*key).erase(_keys);
+    }
     return 0;
 }
 
-int INI::DelValsByKeys(string _keys)
+void INI::AppendValByKeysAndVals(string _keys, string _values, string _value)
 {
-    values * vals = (*key)[_keys];
-    if(vals == NULL)
+    if(key->find(_keys) == key->end())
     {
-        return -1;
+        values * val = new values();
+        (*key)[_keys] = val;
     }
-    delete(vals);
-    (*key).erase(_keys);
-    return 0;
+    values * val = (*key)[_keys];
+    (*val)[_values] = _value;
 }
 
 int INI::WriteINI()

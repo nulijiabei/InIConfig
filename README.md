@@ -1,10 +1,7 @@
 ------------
 C++ .INI 格式文件读写
 
-	#include <iostream>
 	#include "ini.h"
-
-	using namespace std;
 
 	int main()
 	{
@@ -21,6 +18,8 @@ C++ .INI 格式文件读写
 	    ini->GetINI();
 	    // 清空
 	    ini->ClearINI();
+	    // 释放
+	    delete(ini);
 
 	    return 0;
 	}

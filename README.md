@@ -36,7 +36,7 @@ C++ .INI 格式文件读写
 	    // 删除
 	    ini->DelValByKeys("keys", "values") // -1 Error
 
-            // 删除
+	    // 删除
 	    ini->DelValsByKeys("keys") // -1 Error
 
 	    // 释放

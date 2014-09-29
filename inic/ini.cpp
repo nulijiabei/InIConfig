@@ -4,9 +4,10 @@
 #include <iostream>
 #include <string.h>
 
-INI::INI()
+INI::INI(string _path)
 {
     key = new keys();
+    path = _path;
 }
 
 INI::~INI()
@@ -15,7 +16,7 @@ INI::~INI()
     delete(key);
 }
 
-int INI::ReadINI(string path)
+int INI::ReadINI()
 {
     string line;
     string type;
@@ -84,7 +85,7 @@ keys* INI::GetINI()
     return key;
 }
 
-int INI::WriteINI(string path)
+int INI::WriteINI()
 {
     string data;
     ofstream f(path.c_str());

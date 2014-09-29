@@ -7,11 +7,11 @@ int main()
 {
 
     // INI
-    INI * ini = new INI();
+    INI * ini = new INI("ini");
     // 读取 -1 Error
-    ini->ReadINI("ini");
+    ini->ReadINI();
     // 写入 -1 Error
-    ini->WriteINI("ini");
+    ini->WriteINI();
     // 查看
     ini->ShowINI();
     // 获取

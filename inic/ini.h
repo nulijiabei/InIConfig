@@ -12,16 +12,17 @@ typedef map<string, values*> keys;
 class INI
 {
 public:
-    INI();
+    INI(string);
     ~INI();
 public:
-    int ReadINI(string);
-    int WriteINI(string);
+    int ReadINI();
+    int WriteINI();
     void ClearINI();
     void ShowINI();
     keys* GetINI();
 private:
     keys * key;
+    string path;
 };
 
 #endif // INI_H

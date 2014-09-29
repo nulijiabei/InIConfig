@@ -20,6 +20,8 @@ public:
     void ClearINI();
     void ShowINI();
     keys* GetINI();
+    string GetValByKeys(string, string);
+    values* GetValsByKeys(string);
 private:
     keys * key;
     string path;

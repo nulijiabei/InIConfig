@@ -85,6 +85,21 @@ keys* INI::GetINI()
     return key;
 }
 
+values* INI::GetValsByKeys(string _keys)
+{
+     return (*key)[_keys];
+}
+
+string INI::GetValByKeys(string _keys, string _values)
+{
+    values * vals = (*key)[_keys];
+    if(vals != NULL)
+    {
+        return  (*vals)[_values];
+    }
+    return "";
+}
+
 int INI::WriteINI()
 {
     string data;

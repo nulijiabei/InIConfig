@@ -15,7 +15,7 @@ public:
     INI();
     ~INI();
 public:
-    int ReadINI();
+    int ReadINI(string);
     int WriteINI(string);
     void ClearINI();
     void ShowINI();

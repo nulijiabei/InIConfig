@@ -5,10 +5,20 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
+
+    // INI
     INI * ini = new INI();
-    ini->ReadINI();
+    // 读取 -1 Error
+    ini->ReadINI("ini");
+    // 写入 -1 Error
+    ini->WriteINI("ini");
+    // 查看
     ini->ShowINI();
+    // 获取
+    ini->GetINI();
+    // 清空
+    ini->ClearINI();
+
     return 0;
 }
 

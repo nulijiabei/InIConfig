@@ -15,16 +15,16 @@ INI::~INI()
     delete(key);
 }
 
-int INI::ReadINI()
+int INI::ReadINI(string path)
 {
     string line;
     string type;
     int i;
-    ifstream inf("matrix.ini");
-    if (!inf.is_open()){
+    ifstream f(path.c_str());
+    if (!f.is_open()){
         return -1;
     }
-    while(getline(inf, line)){
+    while(getline(f, line)){
         if (line.substr(0,1) ==  "#" || line.empty())
         {
             continue;
@@ -50,7 +50,7 @@ int INI::ReadINI()
         values * val = (*key)[type];
         (*val)[line.substr(0,i)] = line.substr(line.find("=")+1,line.length());
     }
-    inf.close();
+    f.close();
     return 0;
 }
 
@@ -87,8 +87,8 @@ keys* INI::GetINI()
 int INI::WriteINI(string path)
 {
     string data;
-    ofstream outf(path.c_str());
-    if(!outf.is_open())
+    ofstream f(path.c_str());
+    if(!f.is_open())
     {
         return -1;
     }
@@ -99,13 +99,18 @@ int INI::WriteINI(string path)
         data.append((*it).first);
         data.append("]");
         data.append("\n");
-        cout << "[" << (*it).first << "]" << endl;
         values * val = (*it).second;
         values::iterator iv;
         for(iv=(*val).begin(); iv!=(*val).end(); iv++)
         {
-            cout << (*iv).first << "=" << (*iv).second << endl;
+            data.append((*iv).first);
+            data.append("=");
+            data.append((*iv).second);
+            data.append("\n");
         }
     }
+    f.write(data.c_str(), strlen(data.c_str()));
+    f.flush();
+    f.close();
     return 0;
 }

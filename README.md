@@ -25,13 +25,19 @@ C++ .INI 格式文件读写
 	    ini->ClearINI();
 
 	    // 取值
-	    ini->GetValByKeys("keys","values")
+	    ini->GetValByKeys("keys", "values")
 
 	    // 空
-	    ini->GetValByKeys("keys","values").empty() // Error
+	    ini->GetValByKeys("keys", "values").empty() // Error
 
 	    // 取值
 	    ini->GetValsByKeys("keys") // NULL Error
+
+	    // 删除
+	    ini->DelValByKeys("keys", "values") // -1 Error
+
+            // 删除
+	    ini->DelValsByKeys("keys") // -1 Error
 
 	    // 释放
 	    delete(ini);

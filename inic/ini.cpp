@@ -87,7 +87,7 @@ keys* INI::GetINI()
 
 values* INI::GetValsByKeys(string _keys)
 {
-     return (*key)[_keys];
+    return (*key)[_keys];
 }
 
 string INI::GetValByKeys(string _keys, string _values)
@@ -98,6 +98,29 @@ string INI::GetValByKeys(string _keys, string _values)
         return  (*vals)[_values];
     }
     return "";
+}
+
+int INI::DelValByKeys(string _keys, string _values)
+{
+    values * vals = (*key)[_keys];
+    if(vals == NULL)
+    {
+        return -1;
+    }
+    (*vals).erase(_values);
+    return 0;
+}
+
+int INI::DelValsByKeys(string _keys)
+{
+    values * vals = (*key)[_keys];
+    if(vals == NULL)
+    {
+        return -1;
+    }
+    delete(vals);
+    (*key).erase(_keys);
+    return 0;
 }
 
 int INI::WriteINI()

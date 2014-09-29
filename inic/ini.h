@@ -22,6 +22,8 @@ public:
     keys* GetINI();
     string GetValByKeys(string, string);
     values* GetValsByKeys(string);
+    int DelValByKeys(string, string);
+    int DelValsByKeys(string);
 private:
     keys * key;
     string path;

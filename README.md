@@ -27,11 +27,11 @@ C++ .INI 格式文件读写
 	    // 取值
 	    ini->GetValByKeys("keys","values")
 
-            // 空
+	    // 空
 	    ini->GetValByKeys("keys","values").empty() // Error
 
-            // 取值
-            ini->GetValsByKeys("keys") // NULL Error
+	    // 取值
+	    ini->GetValsByKeys("keys") // NULL Error
 
 	    // 释放
 	    delete(ini);

@@ -49,8 +49,8 @@ int INI::ReadINI()
             values * val = new values();
             (*key)[type] = val;
         }
-        values * val = (*key)[type];
-        (*val)[line.substr(0,i)] = line.substr(line.find("=")+1,line.length());
+        values * vals = (*key)[type];
+        (*vals)[line.substr(0,i)] = line.substr(line.find("=")+1,line.length());
     }
     f.close();
     return 0;
@@ -120,11 +120,11 @@ void INI::AppendValByKeysAndVals(string _keys, string _values, string _value)
 {
     if(key->find(_keys) == key->end())
     {
-        values * val = new values();
-        (*key)[_keys] = val;
+        values * vals = new values();
+        (*key)[_keys] = vals;
     }
-    values * val = (*key)[_keys];
-    (*val)[_values] = _value;
+    values * vals = (*key)[_keys];
+    (*vals)[_values] = _value;
 }
 
 int INI::WriteINI()
@@ -142,9 +142,9 @@ int INI::WriteINI()
         data.append((*it).first);
         data.append("]");
         data.append("\n");
-        values * val = (*it).second;
+        values * vals = (*it).second;
         values::iterator iv;
-        for(iv=(*val).begin(); iv!=(*val).end(); iv++)
+        for(iv=(*vals).begin(); iv!=(*vals).end(); iv++)
         {
             data.append((*iv).first);
             data.append("=");

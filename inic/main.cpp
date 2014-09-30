@@ -15,7 +15,7 @@ int main()
     // 取值
     ini->GetValByKeysAndVals("keys", "values");
 
-    // 空
+    // 空l
     ini->GetValByKeysAndVals("keys", "values").empty(); // Error
 
     // 添加

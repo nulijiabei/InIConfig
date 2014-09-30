@@ -9,4 +9,3 @@ SOURCES += \
 
 HEADERS += \
     ini.h
-

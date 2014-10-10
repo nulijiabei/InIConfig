@@ -8,6 +8,7 @@ INI::INI(string _path)
 {
     key = new keys();
     path = _path;
+    ReadINI();
 }
 
 INI::~INI()
@@ -16,7 +17,7 @@ INI::~INI()
     delete(key);
 }
 
-int INI::ReadINI()
+bool INI::ReadINI()
 {
     ClearINI();
     string line;
@@ -24,7 +25,7 @@ int INI::ReadINI()
     int i;
     ifstream f(path.c_str());
     if (!f.is_open()){
-        return -1;
+        return false;
     }
     while(getline(f, line)){
         if (line.substr(0,1) ==  "#" || line.empty())
@@ -53,7 +54,7 @@ int INI::ReadINI()
         (*vals)[line.substr(0,i)] = line.substr(line.find("=")+1,line.length());
     }
     f.close();
-    return 0;
+    return true;
 }
 
 void INI::ClearINI()
@@ -96,16 +97,16 @@ string INI::GetValByKeysAndVals(string _keys, string _values)
     return (*vals)[_values];
 }
 
-int INI::DelValByKeysAndVals(string _keys, string _values)
+bool INI::DelValByKeysAndVals(string _keys, string _values)
 {
     if (key->find(_keys) == key->end())
     {
-        return -1;
+        return false;
     }
     values * vals = (*key)[_keys];
     if (vals->find(_values) == vals->end())
     {
-        return -1;
+        return false;
     }
     (*vals).erase(_values);
     if ((*vals).size() == 0)
@@ -113,7 +114,7 @@ int INI::DelValByKeysAndVals(string _keys, string _values)
         delete(vals);
         (*key).erase(_keys);
     }
-    return 0;
+    return true;
 }
 
 void INI::AppendValByKeysAndVals(string _keys, string _values, string _value)
@@ -127,13 +128,13 @@ void INI::AppendValByKeysAndVals(string _keys, string _values, string _value)
     (*vals)[_values] = _value;
 }
 
-int INI::WriteINI()
+bool INI::WriteINI()
 {
     string data;
     ofstream f(path.c_str());
     if(!f.is_open())
     {
-        return -1;
+        return false;
     }
     keys::iterator it;
     for(it=(*key).begin(); it!=(*key).end(); it++)
@@ -155,5 +156,5 @@ int INI::WriteINI()
     f.write(data.c_str(), strlen(data.c_str()));
     f.flush();
     f.close();
-    return 0;
+    return true;
 }

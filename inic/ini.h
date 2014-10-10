@@ -15,12 +15,12 @@ public:
     INI(string);
     ~INI();
 public:
-    int ReadINI();
-    int WriteINI();
+    bool ReadINI();
+    bool WriteINI();
     void ClearINI();
     void ShowINI();
     void AppendValByKeysAndVals(string, string, string);
-    int DelValByKeysAndVals(string, string);
+    bool DelValByKeysAndVals(string, string);
     string GetValByKeysAndVals(string, string);
 private:
     keys * key;

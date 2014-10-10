@@ -7,10 +7,10 @@ int main()
     INI * ini = new INI("ini");
 
     // 读取
-    ini->ReadINI(); // -1 Error
+    ini->ReadINI(); // False Error
 
     // 写入
-    ini->WriteINI(); // -1 Error
+    ini->WriteINI(); // False Error
 
     // 取值
     ini->GetValByKeysAndVals("keys", "values");
@@ -22,7 +22,7 @@ int main()
     ini->AppendValByKeysAndVals("keys", "values", "value");
 
     // 删除
-    ini->DelValByKeysAndVals("keys", "values"); // -1 Error
+    ini->DelValByKeysAndVals("keys", "values"); // False Error
 
     // 查看
     ini->ShowINI();

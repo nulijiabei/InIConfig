@@ -21,7 +21,7 @@ public:
     void ShowINI();
     void AppendValByKeysAndVals(string, string, string);
     bool DelValByKeysAndVals(string, string);
-    string GetValByKeysAndVals(string, string);
+    string GetValByKeysAndVals(string, string, string);
 private:
     keys * key;
     string path;

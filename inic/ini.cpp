@@ -8,7 +8,6 @@ INI::INI(string _path)
 {
     key = new keys();
     path = _path;
-    ReadINI();
 }
 
 INI::~INI()
@@ -83,16 +82,16 @@ void INI::ShowINI()
     }
 }
 
-string INI::GetValByKeysAndVals(string _keys, string _values)
+string INI::GetValByKeysAndVals(string _keys, string _values, string _default)
 {
     if (key->find(_keys) == key->end())
     {
-        return "";
+        return _default;
     }
     values * vals = (*key)[_keys];
     if (vals->find(_values) == vals->end())
     {
-        return "";
+        return _default;
     }
     return (*vals)[_values];
 }

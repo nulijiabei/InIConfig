@@ -16,10 +16,7 @@ C++ .INI 格式文件读写
 	    ini->WriteINI(); // False Error
 
 	    // 取值
-	    ini->GetValByKeysAndVals("keys", "values");
-
-	    // 空
-	    ini->GetValByKeysAndVals("keys", "values").empty(); // Error
+	    ini->GetValByKeysAndVals("keys", "values", "default");
 
 	    // 添加
 	    ini->AppendValByKeysAndVals("keys", "values", "value");

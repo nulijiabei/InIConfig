@@ -4,8 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    ini.cpp \
+    INIConfig.cpp \
     main.cpp
 
 HEADERS += \
-    ini.h
+    INIConfig.h

@@ -1,30 +1,30 @@
-#ifndef INI_H
-#define INI_H
+#ifndef INICONFIG_H
+#define INICONFIG_H
 
 #include <map>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-typedef map<string, string> values;
-typedef map<string, values*> keys;
-
-class INI
+class INIConfig
 {
 public:
-    INI(string);
-    ~INI();
+    INIConfig(string);
+    ~INIConfig();
+private:
+    typedef map<string, string> object;
 public:
     bool ReadINI();
     bool WriteINI();
-    void ClearINI();
     void ShowINI();
-    void AppendValByKeysAndVals(string, string, string);
-    bool DelValByKeysAndVals(string, string);
-    string GetValByKeysAndVals(string, string, string);
+    void Clear();
+    void Append(string , string, string);
+    string GetObject(string, string, string);
+    vector<string> GetProject(string);
 private:
-    keys * key;
+    map<string, object>*  project;
     string path;
 };
 
-#endif // INI_H
+#endif // INICONFIG_H

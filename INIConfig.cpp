@@ -1,24 +1,23 @@
-#include "ini.h"
+#include "INIConfig.h"
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <string.h>
+#include <vector>
 
-INI::INI(string _path)
+INIConfig::INIConfig(string _path)
 {
-    key = new keys();
+    project = new map<string, object>();
     path = _path;
 }
 
-INI::~INI()
+INIConfig::~INIConfig()
 {
-    ClearINI();
-    delete(key);
+    delete(project);
 }
 
-bool INI::ReadINI()
+bool INIConfig::ReadINI()
 {
-    ClearINI();
     string line;
     string type;
     int i;
@@ -44,90 +43,89 @@ bool INI::ReadINI()
         {
             continue;
         }
-        if(key->find(type) == key->end())
+        if(project->find(type) == project->end())
         {
-            values * val = new values();
-            (*key)[type] = val;
+            object obj;
+            (*project)[type] = std::move(obj);
         }
-        values * vals = (*key)[type];
-        (*vals)[line.substr(0,i)] = line.substr(line.find("=")+1,line.length());
+        object obj = (*project)[type];
+        obj[line.substr(0,i)] = line.substr(line.find("=")+1,line.length());
+        (*project)[type] = std::move(obj);
     }
     f.close();
     return true;
 }
 
-void INI::ClearINI()
+void INIConfig::ShowINI()
 {
-    keys::iterator it;
-    for(it=(*key).begin(); it!=(*key).end(); it++)
-    {
-        (*(*it).second).clear();
-        delete((*it).second);
-        (*key).erase((*it).first);
-    }
-}
-
-void INI::ShowINI()
-{
-    keys::iterator it;
-    for(it=(*key).begin(); it!=(*key).end(); it++)
+    map<string, object>::iterator it;
+    for(it = project->begin(); it != project->end(); it++)
     {
         cout << "[" << (*it).first << "]" << endl;
-        values * vals = (*it).second;
-        values::iterator iv;
-        for(iv=(*vals).begin(); iv!=(*vals).end(); iv++)
+        object obj = (*it).second;
+        map<string, string>::iterator iv;
+        for(iv=obj.begin(); iv!=obj.end(); iv++)
         {
             cout << (*iv).first << "=" << (*iv).second << endl;
         }
     }
 }
 
-string INI::GetValByKeysAndVals(string _keys, string _values, string _default)
+void INIConfig::Clear()
 {
-    if (key->find(_keys) == key->end())
+    map<string,object>::iterator it;
+    for(it = project->begin(); it != project->end(); it++)
+    {
+        project->erase((*it).first);
+    }
+}
+
+string INIConfig::GetObject(string _project, string _object, string _default)
+{
+    if (project->find(_project) == project->end())
     {
         return _default;
     }
-    values * vals = (*key)[_keys];
-    if (vals->find(_values) == vals->end())
+    object obj = (*project)[_project];
+    if (obj.find(_object) == obj.end())
     {
         return _default;
     }
-    return (*vals)[_values];
+    return obj[_object];
 }
 
-bool INI::DelValByKeysAndVals(string _keys, string _values)
+vector<string> INIConfig::GetProject(string _project)
 {
-    if (key->find(_keys) == key->end())
+    vector<string> list;
+    map<string, object>::iterator it;
+    for(it = project->begin(); it != project->end(); it++)
     {
-        return false;
+        if((*it).first == _project)
+        {
+            object obj = (*it).second;
+            map<string, string>::iterator iv;
+            for(iv = obj.begin(); iv != obj.end(); iv++)
+            {
+                list.push_back((*iv).first);
+            }
+        }
     }
-    values * vals = (*key)[_keys];
-    if (vals->find(_values) == vals->end())
-    {
-        return false;
-    }
-    (*vals).erase(_values);
-    if ((*vals).size() == 0)
-    {
-        delete(vals);
-        (*key).erase(_keys);
-    }
-    return true;
+    return std::move(list);
 }
 
-void INI::AppendValByKeysAndVals(string _keys, string _values, string _value)
+void INIConfig::Append(string _project, string _object, string _value)
 {
-    if(key->find(_keys) == key->end())
+    if(project->find(_project) == project->end())
     {
-        values * vals = new values();
-        (*key)[_keys] = vals;
+        object obj;
+        (*project)[_project] = std::move(obj);
     }
-    values * vals = (*key)[_keys];
-    (*vals)[_values] = _value;
+    object obj = (*project)[_project];
+    obj[_object] = _value;
+    (*project)[_project] = std::move(obj);
 }
 
-bool INI::WriteINI()
+bool INIConfig::WriteINI()
 {
     string data;
     ofstream f(path.c_str());
@@ -135,16 +133,16 @@ bool INI::WriteINI()
     {
         return false;
     }
-    keys::iterator it;
-    for(it=(*key).begin(); it!=(*key).end(); it++)
+    map<string, object>::iterator it;
+    for(it = project->begin(); it!=project->end(); it++)
     {
         data.append("[");
         data.append((*it).first);
         data.append("]");
         data.append("\n");
-        values * vals = (*it).second;
-        values::iterator iv;
-        for(iv=(*vals).begin(); iv!=(*vals).end(); iv++)
+        object obj = (*it).second;
+        map<string, string>::iterator iv;
+        for(iv=obj.begin(); iv!=obj.end(); iv++)
         {
             data.append((*iv).first);
             data.append("=");

@@ -9,3 +9,5 @@ SOURCES += \
 
 HEADERS += \
     INIConfig.h
+
+QMAKE_CXXFLAGS += -std=c++11
